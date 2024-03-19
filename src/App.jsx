@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { Component } from 'react';
+import Header from './components/header';
+import ToDoList from './components/list';
+import Body from './components/body';
 import './App.css'
 
 class App extends Component {
@@ -58,31 +61,19 @@ class App extends Component {
         };
 
         to_do.forEach((value, index) => {
+
             components.push(
-                <li key={index}>
-                    <div id="value">
-                        {value}
-                    </div>
-                    <div id="buttons">
-                        <button onClick={()=>editToDo(index, value)} id="edit">Edit</button>
-                        <button onClick={()=>deleteToDo(index)} id="delete">Delete</button>
-                    </div>
-                </li>
+                <ToDoList index={index} value={value} editClick={()=>editToDo(index, value)} deleteClick={()=>deleteToDo(index)}/>
             );
         });
 
         return (
             <>
-                <h1>To-Do App</h1>
-                <div id="inputCont">
-                    <input type="text" name="input" value={todoText} id="to_do_input" onKeyDown={searchKeyPress} onChange={() => changeText(event.target.value)} placeholder="Enter your To-Do" />
-                    <button id="send" onClick={addToArray} >Send</button>
-                </div>
+                <Header text={todoText} change={() => changeText(event.target.value)} keyDown={searchKeyPress} addArray={addToArray}/>
         
-        
-                <div id="body">
+                <Body>
                     {components}
-                </div>
+                </Body>
             </>
         )
     }
